@@ -8,16 +8,17 @@ public class Step01_2{
     static void quicksort(char[] line,int left,int right){
 	int i=left;
 	int j=right;
-	char pivot=line[(int)((i+(j-1))/2.0)];
+	char pivot=line[(i+j)/2];
 	if(left>=right){
 	    return ;
 	}
 
 
-	while(i<right||j>left){
-	    if(line[i]==line[j]){
-		break;
-	    }
+        do{
+	    //	    if(line[i]==line[j]){
+	    //		break;
+	    //	    }
+
 	    //	for(int g=0;g<line.length;g++){
 	    //    System.out.print(line[g]);
 	    //	}
@@ -26,26 +27,27 @@ public class Step01_2{
 	    //System.out.println(right);
 
 
-	    while(line[i]<pivot){
+	    while((line[i]<pivot)&&(i<right)){
 		i++;
 	    }
-	    while(line[j]>pivot){
+	    while((line[j]>pivot)&&(j>left)){
 		j--;
 	    }
-	    if(i>=j){
-		break;
-	    }
-
+	    if(i<=j){
 	    char temp=line[i];
 	    line[i]=line[j];
 	    line[j]=temp;
-	}
+	    i++;
+	    j--;
+	    }
+	}while(i<=j);
+
 	    
 	if(left<i){
-	    quicksort(line,left,i-1);
+	    quicksort(line,left,j);
 	}
-	if(right>j+1){
-	    quicksort(line,j+1,right);
+	if(right>j){
+	    quicksort(line,i,right);
 	}
 
 
