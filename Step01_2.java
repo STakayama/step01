@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
-//だいたいこれでいいけどtootとか
-
+//入力したやつ一致なければ一つずつ抜く
+//得点高くしたいから、頻度の情報も入れる？
 
 public class Step01_2{
 
@@ -58,32 +58,45 @@ public class Step01_2{
 	//	String input=args[0];　//入力受け取り
 	String[]  dic_line=new String[72412];
 	String st;
+	String ans=null;
 	try{
 	    InputStreamReader in = new InputStreamReader(System.in);       //（１）
 	    BufferedReader buf_in= new BufferedReader(in);
 	    System.out.println("何か入力してください.");
 	    String input=buf_in.readLine();//入力受け付け
-	    char[] input_char=input.toCharArray();System.out.println("並び替え:"+input);
+	    char[] input_char=input.toCharArray();
 	    quicksort(input_char,0,input_char.length-1);
-	    //    input=String.valueOf(input_char);
-	    System.out.println("並び替え:"+String.valueOf(input_char));
+	    String    after_input=String.valueOf(input_char);
+	    System.out.println("並び替え:"+after_input);
 
-	    /*
+	    
 
 	try{
 	    FileReader dict=new FileReader("sorted_dic.txt");
 	    BufferedReader d_buf=new BufferedReader(dict);
-	    int i=0;
+	    int i=0;int j=0;
 
 	    //		char change[]=d_buf.readLine().toCharArray();//辞書の文字をどう入れ替えるか   一行の文字列をを一個一個格納
 	    //	dict_line[i];
+	    while(j<input_char.length){
 	    while((st=d_buf.readLine())!=null){
 		dic_line[i]=st;
-		if(Arrays.asList(dic_line).contains(input)){
-		    System.out.println(dic_line[i]);
+		if(Arrays.asList(dic_line).contains(after_input)){//dic_line配列全体にafter_inputは含まれているか
+		    ans=dic_line[i];
+		    System.out.println("一致:"+ans);
 		    break;
 		}
 		i++;//辞書txtを配列に読み込み
+	    }
+	    if(ans!=null){
+		break;
+	    }
+	    
+	    //input_char短く
+	    //ここでd_buf開き直す？
+	    d_buf.close();
+	    d_buf=new BufferedReader(dict);
+	    j++;
 	    }
 
 
@@ -91,7 +104,7 @@ public class Step01_2{
 	}
 	catch(IOException e){
 	    System.out.println(e);
-	    }*/
+	    }
 	}catch(IOException e){
 
 	}
