@@ -2,9 +2,9 @@ import java.util.*;
 import java.io.*;
 import java.lang.*;
 //二文字以下の単語はなし
-//文字によって得点は異なる
-//http://www.openreference.org/articles/view/623#anchor3
-//16文字だとかなり長い->4文字以下は検索させない？,母音なしも無視する？
+ //文字によって得点は異なる
+ //http://www.openreference.org/articles/view/623#anchor3
+ //16文字だとかなり長い->4文字以下は検索させない？,母音なしも無視する？
 //3と4は5文字まで対応なかったらやる？同じ文字数なら成功した時点で止める？
 //一定の得点達成で止める？
 //7文字により高得点な6文字はなかった
@@ -79,19 +79,29 @@ public class Step01_4{
 		System.out.println(lef);
 		System.out.println(righ);
 		System.out.println("c:"+center);
-		if(dic_line[center][0].compareTo(sorted_input)==0){
-		    ans=dic_line[center][2];
-		    System.out.println("一致:"+ans+","+dic_line[center][1]);
-		    num[0]=String.valueOf(center);//どこにあるか
-		    num[1]=dic_line[center][1];//得点
-		    num[2]=dic_line[center][2];
-		    return num;
+		if(dic_line[center][0].length()==sorted_input.length()){
+		    if(dic_line[center][0].compareTo(sorted_input)==0){
+			ans=dic_line[center][2];
+			System.out.println("一致:"+ans+","+dic_line[center][1]);
+			num[0]=String.valueOf(center);//どこにあるか
+			num[1]=dic_line[center][1];//得点
+			num[2]=dic_line[center][2];
+			return num;
+		    }
+		    else if(dic_line[center][0].compareTo(sorted_input)<0){//dic_lineのが小さい
+			lef=center+1;
+			//  System.out.println(lef);
+		    }else {
+			righ=center-1;
+		    }
 		}
-		else if(dic_line[center][0].compareTo(sorted_input)<0){//dic_lineのが小さい
-		    lef=center+1;
-		    //  System.out.println(lef);
-		}else{
-		    righ=center-1;
+		else{
+		    if(dic_line[center][0].compareTo(sorted_input)<0){//dic_lineのが小さい
+			lef=center+1;
+			//  System.out.println(lef);
+		    }else {
+			righ=center-1;
+		    }
 		}
 	    }while(lef<=righ);
 
