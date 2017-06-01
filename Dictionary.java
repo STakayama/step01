@@ -3,6 +3,7 @@ import java.io.*;
 //だいたいこれでいいけどtootとか
 //http://java-reference.com/java_array_sort.html
 
+
 public class Dictionary{
 
      static void quicksort(char[] line,int left,int right){
@@ -108,7 +109,7 @@ public class Dictionary{
 		    i++;
 		    point=0;
 		}while((st=d_buf.readLine())!=null);
-		System.out.println(i-1+dic_line[i-1][0]);
+		//		System.out.println(i-1+dic_line[i-1][0]);
 		pw.close();
 	    }
 	    catch(IOException e){
@@ -135,7 +136,7 @@ public class Dictionary{
 	    Arrays.sort(dic_line2);
 	    for(int k=0;k<72412;k++){
 	    pw2.write(dic_line2[k]+"\n");
-	    System.out.println(dic_line2[k]);
+	    //	    System.out.println(dic_line2[k]);
 	    }
 	    	pw2.close();
 
