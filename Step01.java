@@ -2,9 +2,9 @@ import java.util.*;
 import java.io.*;
 import java.lang.*;
 //二文字以下の単語はなし
- //文字によって得点は異なる
- //http://www.openreference.org/articles/view/623#anchor3
- //16文字だとかなり長い->4文字以下は検索させない？,母音なしも無視する？
+//文字によって得点は異なる
+//http://www.openreference.org/articles/view/623#anchor3
+//16文字だとかなり長い->4文字以下は検索させない？,母音なしも無視する？
 //3と4は5文字まで対応なかったらやる？同じ文字数なら成功した時点で止める？
 //一定の得点達成で止める？
 //7文字により高得点な6文字はなかった
@@ -64,88 +64,88 @@ public class Step01{
 	String ans="";
 	     
 
-	    //binary
-	    int lef=dic_index[0];
-	    int righ=dic_index[1];//dic_line.length-1;
-	    do{
-		int center=(lef+righ)/2;
+	//binary
+	int lef=dic_index[0];
+	int righ=dic_index[1];//dic_line.length-1;
+	do{
+	    int center=(lef+righ)/2;
 
-		int dic_length=dic_line[center][0].length();
-		int in_length=sorted_input.length();
+	    int dic_length=dic_line[center][0].length();
+	    int in_length=sorted_input.length();
 
-		int a=0;
+	    int a=0;
 
-		char in_char[]=sorted_input.toCharArray();
-		char dic_char[]=dic_line[center][0].toCharArray();
+	    char in_char[]=sorted_input.toCharArray();
+	    char dic_char[]=dic_line[center][0].toCharArray();
 
-		if(dic_length==in_length){
-		    //	    System.out.println(sorted_input);
-		    //   System.out.println(dic_line[center][0]);
+	    if(dic_length==in_length){
+		//	    System.out.println(sorted_input);
+		//   System.out.println(dic_line[center][0]);
 		    
-		    while(a<dic_length){
-			//	System.out.println(in_char[a]);
-			//	System.out.println(dic_char[a]);
-			//	System.out.println(righ);
-			//	System.out.println(lef);
+		while(a<dic_length){
+		    //	System.out.println(in_char[a]);
+		    //	System.out.println(dic_char[a]);
+		    //	System.out.println(righ);
+		    //	System.out.println(lef);
 
-			if(in_char[a]>dic_char[a]){
-			    //	    System.out.println("l同"+a);//dic_char[a]+dic_length+"lllllaaaaaaaaaaaaa"+a+in_char[a]);
-			    lef=center+1;
-			    break;
-			}
-			else if(in_char[a]<dic_char[a]){
-			    //	    System.out.println("r同"+a);//dic_char[a]+dic_length+"rrrrraaaaaaaaaaaaa"+a+in_char[a]);
-			    righ=center-1;
-			    break;
-			}
-			a++;
+		    if(in_char[a]>dic_char[a]){
+			//	    System.out.println("l同"+a);//dic_char[a]+dic_length+"lllllaaaaaaaaaaaaa"+a+in_char[a]);
+			lef=center+1;
+			break;
 		    }
+		    else if(in_char[a]<dic_char[a]){
+			//	    System.out.println("r同"+a);//dic_char[a]+dic_length+"rrrrraaaaaaaaaaaaa"+a+in_char[a]);
+			righ=center-1;
+			break;
+		    }
+		    a++;
+		}
 		    
-		    if(a==dic_length){
-			ans=dic_line[center][2];
-			System.out.println("一致:"+ans+","+dic_line[center][1]);
-			num[0]=String.valueOf(center);//どこにあるか
-			num[1]=dic_line[center][1];//得点
-			num[2]=dic_line[center][2];
-			return num;
+		if(a==dic_length){
+		    ans=dic_line[center][2];
+		    System.out.println("一致:"+ans+","+dic_line[center][1]);
+		    num[0]=String.valueOf(center);//どこにあるか
+		    num[1]=dic_line[center][1];//得点
+		    num[2]=dic_line[center][2];
+		    return num;
+		}
+	    }
+
+	    else{//字数一致しない
+		int min=Math.min(dic_length,in_length);
+        
+		while(a<min){
+		    if(in_char[a]>dic_char[a]){
+			//				System.out.println("l0同"+a);
+			lef=center+1;
+			break;
+		    }
+		    else if(in_char[a]<dic_char[a]){
+			//			System.out.println("r0同"+a);
+			righ=center-1;
+			break;
+		    }
+		    a++;//次の文字へ
+		}
+			
+		//ここまで出てたら途中まで一致<-違う、break
+		if(a==min){
+		    if(in_length<dic_length){
+			//			    System.out.println("r1同"+a);
+			righ=center-1;
+		    }
+		    else{
+			//		    System.out.println("l1同"+a);
+			lef=center+1;
 		    }
 		}
+	    }
+	    a=0;
+	    //	System.out.println("一周"+center+",l;"+lef+",r;"+righ);
 
-		    else{//字数一致しない
-			int min=Math.min(dic_length,in_length);
-        
-			while(a<min){
-			    if(in_char[a]>dic_char[a]){
-				//				System.out.println("l0同"+a);
-				lef=center+1;
-				break;
-			    }
-			    else if(in_char[a]<dic_char[a]){
-				//			System.out.println("r0同"+a);
-				righ=center-1;
-				break;
-			    }
-			    a++;//次の文字へ
-			}
-			
-			//ここまで出てたら途中まで一致<-違う、break
-			if(a==min){
-			if(in_length<dic_length){
-			    //			    System.out.println("r1同"+a);
-			    righ=center-1;
-			}
-			else{
-			    //		    System.out.println("l1同"+a);
-			    lef=center+1;
-			}
-			}
-		    }
-		a=0;
-		//	System.out.println("一周"+center+",l;"+lef+",r;"+righ);
-
-		dic_char=null;
-		in_char=null;
-	    }while(lef<=righ);
+	    dic_char=null;
+	    in_char=null;
+	}while(lef<=righ);
 
 	num[0]="0";
 	num[1]="0";
@@ -189,7 +189,7 @@ public class Step01{
 	Arrays.fill(ans_num,"0");
 	Arrays.fill(save_num,"0");
 
-		String[][]  dic_line=new String[72412][3];//名前,得点,答え
+	String[][]  dic_line=new String[72412][3];//名前,得点,答え
 	try{
 	    FileReader dict=new FileReader("sorted_dic.txt");
 	    BufferedReader d_buf=new BufferedReader(dict);
@@ -219,57 +219,57 @@ public class Step01{
 	    String input=buf_in.readLine();//入力受け付け
 
 
-	     int index[][]=new int[26][2];
+	    int index[][]=new int[26][2];
 	    try{//索引作成
-	   //アルファベット、開始と終わり	
-	    FileReader ind=new FileReader("sorted_dic.txt");
-	    BufferedReader in_buf=new BufferedReader(ind);
+		//アルファベット、開始と終わり	
+		FileReader ind=new FileReader("sorted_dic.txt");
+		BufferedReader in_buf=new BufferedReader(ind);
 
-	    String com=in_buf.readLine();
-	    index[0][0]=0;
-	    int al=0;
-	    int inde=1;
-	    char check='a';
-	    while((com=in_buf.readLine())!=null){
-		//		System.out.println(check);
-		//System.out.println(al);	
-		//System.out.println(inde);
+		String com=in_buf.readLine();
+		index[0][0]=0;
+		int al=0;
+		int inde=1;
+		char check='a';
+		while((com=in_buf.readLine())!=null){
+		    //		System.out.println(check);
+		    //System.out.println(al);	
+		    //System.out.println(inde);
 		 
-		if(!com.startsWith(String.valueOf(check))){
-		    index[al][1]=inde-1;//ok
+		    if(!com.startsWith(String.valueOf(check))){
+			index[al][1]=inde-1;//ok
+			al++;
+			check++;
+			index[al][0]=inde;
+			while(!com.startsWith(String.valueOf(check))||check=='z'){
+			    //	System.out.println(check);
+			    //	System.out.println(al);			
+			    al++;
+			    check++;//次のアルファベットへ ないやつもある
+			}
+		    }
+		    inde++;
+		}
+	    
+		do{
 		    al++;
 		    check++;
-		    index[al][0]=inde;
-		    while(!com.startsWith(String.valueOf(check))||check=='z'){
-			//	System.out.println(check);
-			//	System.out.println(al);			
-			al++;
-			check++;//次のアルファベットへ ないやつもある
-		    }
-		}
-		inde++;
-	    }
-	    
-	    do{
-				al++;
-		check++;
-		//	System.out.println(al);
-		//	System.out.println(check);
-		index[al][0]=-1;
-		index[al][1]=-1;
+		    //	System.out.println(al);
+		    //	System.out.println(check);
+		    index[al][0]=-1;
+		    index[al][1]=-1;
 
-	    }while(check!='z');
-	    //	    System.out.println(index[al][0]);
-	    //	    System.out.println(index[al][1]);
+		}while(check!='z');
+		//	    System.out.println(index[al][0]);
+		//	    System.out.println(index[al][1]);
 		al++;
 		check++;
 
 
-	    in_buf.close();
+		in_buf.close();
 
-	}catch(IOException e){
+	    }catch(IOException e){
 
-	}
+	    }
 
 
 
@@ -294,46 +294,50 @@ public class Step01{
 		    }
 		}
 		//	 System.out.println("check1");
-		if(strtemp==null||strtemp.length()<3||(strtemp.indexOf("a")==-1&&strtemp.indexOf("i")==-1&&strtemp.indexOf("u")==-1&&strtemp.indexOf("e")==-1&&strtemp.indexOf("o")==-1)) continue;//三文字未満は検索しない、母音なしも
-		//	 System.out.println("check2");
+		
+		    if(strtemp==null||strtemp.length()<5)continue;
+		    //||(strtemp.indexOf("a")==-1&&strtemp.indexOf("i")==-1&&strtemp.indexOf("u")==-1&&strtemp.indexOf("e")==-1&&strtemp.indexOf("o")==-1)
+
+		    //三文字未満は検索しない、母音なしも
+		    //	 System.out.println("check2");
 
 
-		//	System.out.println(strtemp.toCharArray());
+		    //	System.out.println(strtemp.toCharArray());
 
-		char[] input_char=strtemp.toCharArray();
-		quicksort(input_char,0,input_char.length-1);//入力文字の整列 最初に一回でもよさげ？
-		String    after_input=String.valueOf(input_char);
-			 System.out.println("並び替え:"+after_input);
-
-
-
-		//System.out.println(after_input);
-			 if((index[after_input.charAt(0)-'a'][0]>-1)){//先頭にないやつは除外
-			     ans_num=search(after_input,ans_num,index[after_input.charAt(0)-'a'],dic_line);
+		    char[] input_char=strtemp.toCharArray();
+		    quicksort(input_char,0,input_char.length-1);//入力文字の整列 最初に一回でもよさげ？
+		    String    after_input=String.valueOf(input_char);
+		    System.out.println("並び替え:"+after_input);
 
 
-				}
 
-		if(Integer.parseInt(ans_num[1])>12){//得点が12以上ならばおしまい
-		    System.out.println(ans_num[1]);
-		    save_num=ans_num.clone();
-		    break;
-
-		}
+		    //System.out.println(after_input);
+		    if((index[after_input.charAt(0)-'a'][0]>-1)){//先頭にないやつは除外
+			ans_num=search(after_input,ans_num,index[after_input.charAt(0)-'a'],dic_line);
 
 
-		//判定
-		if(Integer.parseInt(save_num[1])<Integer.parseInt(ans_num[1])){
-		    save_num=ans_num.clone();
-		    ans_num[0]="0";
-		    ans_num[1]="1";
-		    ans_num[2]=null;
-		}
+		    }
+
+		    /*		if(Integer.parseInt(ans_num[1])>12){//得点が12以上ならばおしまい
+				System.out.println(ans_num[1]);
+				save_num=ans_num.clone();
+				break;
+
+				}*/
+
+
+		    //判定
+		    if(Integer.parseInt(save_num[1])<Integer.parseInt(ans_num[1])){
+			save_num=ans_num.clone();
+			ans_num[0]="0";
+			ans_num[1]="1";
+			ans_num[2]=null;
+		    }
 
 
 	    }//for
 
-	    System.out.println("結果："+save_num[2]+"得点:"+save_num[1]);
+	    System.out.println(save_num[2]);
 
 	}catch(IOException e){
 

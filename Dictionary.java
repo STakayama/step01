@@ -16,18 +16,6 @@ public class Dictionary{
 
 
         do{
-	    //	    if(line[i]==line[j]){
-	    //		break;
-	    //	    }
-
-	    //	for(int g=0;g<line.length;g++){
-	    //    System.out.print(line[g]);
-	    //	}
-	    //System.out.println("");
-	    //System.out.println("i:"+i);//ここ
-	    //System.out.println(right);
-
-
 	    while((line[i]<pivot)&&(i<right)){
 		i++;
 	    }
