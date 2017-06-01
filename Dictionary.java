@@ -61,7 +61,7 @@ public class Dictionary{
 	String[][] dic_line=new String[72412][3];
 	String st;
 	
-	File file=new File("sorted_dic.txt");
+	File file=new File("mid_dic.txt");
 
 	try{
 	    PrintWriter pw=new PrintWriter(new BufferedWriter(new FileWriter(file)));
@@ -123,9 +123,9 @@ public class Dictionary{
 	try{
 	    String st2=null;
 	    String[] dic_line2=new String[72412];
-	    File file2=new File("2_sorted_dic.txt");//辞書順に並び替えたやつ、得点、大元の
+	    File file2=new File("sorted_dic.txt");//辞書順に並び替えたやつ、得点、大元の
 	    PrintWriter pw2=new PrintWriter(new BufferedWriter(new FileWriter(file2)));
-	    FileReader dict2=new FileReader("sorted_dic.txt");
+	    FileReader dict2=new FileReader("mid_dic.txt");
 	    BufferedReader d_buf2=new BufferedReader(dict2);
 	    int j=0;
 	    while((st2=d_buf2.readLine())!=null){//辞書配列作成
