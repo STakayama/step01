@@ -16,6 +16,8 @@ import java.lang.*;
 //rbcgrghdeimytssv 2m7.191s besmirch->bcehimrs
 
 
+
+
 public class Step01{
     //辞書作成用
     static void quicksort(char[] line,int left,int right){
@@ -170,6 +172,57 @@ public class Step01{
 
 
 
+    public static String[] make_dic(String row[]){
+	try{
+	    String st;
+	    FileReader dic=new FileReader("dic.txt");
+	    BufferedReader dic_buf=new BufferedReader(dic);
+	    int i=0;
+	    int point=0;
+	    while((st=dic_buf.readLine())!=null){
+		if(Character.isUpperCase(st.charAt(0))){//大文字を小文字に
+		    st=st.toLowerCase();
+		} 
+	
+		char change[]=st.toCharArray();
+		for(int a=0;a<change.length;a++){//単語ごとの得点
+		    if("jkqxz".indexOf(change[a])!=-1){
+			point+=3;
+		    }	
+		    else if("cfhlmpvwy".indexOf(change[a])!=-1){
+			point+=2;
+		    }
+		    else{
+			point+=1;
+		    }	    
+		}
+		quicksort(change,0,change.length-1);//文字を若い順に
+		
+		st=String.valueOf(change);
+		if(Character.isUpperCase(st.charAt(0))){
+		        st=st.toLowerCase();
+		    } 
+
+		row[i]=st+","+String.valueOf(point)+","+st;
+		//		System.out.println(row[i]);
+		//		System.out.println(row[i].substring(0,row[i].indexOf(",")));
+		//	dic_line[i][0]=String.valueOf(change);//並び替え後の単語
+		//		dic_line[i][1]=String.valueOf(point);//得点
+		//		dic_line[i][2]=st;//本来の単語
+		i++;
+		point=0;	
+	    }	
+
+	}catch(IOException e){
+	    System.out.println(e);
+	    Arrays.fill(row,"0");
+	}
+	return row;
+    }
+
+
+
+
 
 
 
@@ -183,64 +236,62 @@ public class Step01{
 	String ans_num[]=new String[3];//場所、得点、名前
 	String save_num[]=new String[3];
 
-	String st,st2;
+	String st;
 	int i=0;
 
 	Arrays.fill(ans_num,"0");
 	Arrays.fill(save_num,"0");
 
 	String[][]  dic_line=new String[72412][3];//名前,得点,答え
-	try{
-	    FileReader dict=new FileReader("sorted_dic.txt");
-	    BufferedReader d_buf=new BufferedReader(dict);
+	String[] row_line=new String[72412];
+	//	Arrays.fill(dic_line,"0");
+	//	Arrays.fill(row_line,"0");
 
-	    while((st=d_buf.readLine())!=null){//辞書配列作成
-		dic_line[i][0]=st.substring(0,st.indexOf(","));//名前
-		//	 System.out.println("*********"+dic_line[i][0]);
-		st2=st.substring(st.indexOf(",")+1);
-		dic_line[i][1]=st2.substring(0,st2.indexOf(","));//得点
-		//  System.out.println("*********"+dic_line[i][1]);
-		dic_line[i][2]=st2.substring(st2.indexOf(",")+1);//答え
-		i++;//辞書txtを配列に読み込み
-	    } 
+
+	row_line=make_dic(row_line);
+
+	Arrays.sort(row_line);
+	for(int a=0;a<row_line.length;a++){
+	    dic_line[a][0]=row_line[a].substring(0,row_line[a].indexOf(","));//名前
+	    // System.out.println(dic_line[a][0]);
+		st=row_line[a].substring(row_line[a].indexOf(",")+1);
+		dic_line[a][1]=st.substring(0,st.indexOf(","));//
+		dic_line[a][2]=st.substring(st.indexOf(",")+1);//答え
+
+		//	System.out.println(dic_line[a][0]);
+				//	System.out.println(dic_line[a][0]);
+		//		System.out.println(dic_line[a][1]);
+		//	System.out.println(dic_line[a][2]);
 	}
-	catch(IOException e){
-	    System.out.println(e);
-	}
 
 
-
-
-
+	
 	try{
 	    InputStreamReader in = new InputStreamReader(System.in);       //（１）
 	    BufferedReader buf_in= new BufferedReader(in);
 	    System.out.println("何か入力してください.");
 	    String input=buf_in.readLine();//入力受け付け
 
+	    
+	    int[][] index=new int[26][2];
 
-	    int index[][]=new int[26][2];
-	    try{//索引作成
-		//アルファベット、開始と終わり	
-		FileReader ind=new FileReader("sorted_dic.txt");
-		BufferedReader in_buf=new BufferedReader(ind);
+	    index[0][0]=0;
+	    int al=0;
+	    int inde=1;
+	    char check='a';
 
-		String com=in_buf.readLine();
-		index[0][0]=0;
-		int al=0;
-		int inde=1;
-		char check='a';
-		while((com=in_buf.readLine())!=null){
+	    	        for(int b=0;b<dic_line.length;b++){
 		    //		System.out.println(check);
 		    //System.out.println(al);	
 		    //System.out.println(inde);
 		 
-		    if(!com.startsWith(String.valueOf(check))){
+		    if(!dic_line[b][0].startsWith(String.valueOf(check))){
 			index[al][1]=inde-1;//ok
 			al++;
 			check++;
 			index[al][0]=inde;
-			while(!com.startsWith(String.valueOf(check))||check=='z'){
+			while(!dic_line[b][0].startsWith(String.valueOf(check))||check=='z'){				System.out.println(check);
+
 			    //	System.out.println(check);
 			    //	System.out.println(al);			
 			    al++;
@@ -265,11 +316,32 @@ public class Step01{
 		check++;
 
 
-		in_buf.close();
+	    /*	    int b=0;
+	    index[alp][0]=b;
 
-	    }catch(IOException e){
+	    //	    for(int b=0;b<dic_line.length;b++){
+	    while(b<dic_line.length){
 
+		System.out.println(dic_line[b][0].charAt(0)+","+check);
+		if(dic_line[b][0].charAt(0)!=check){
+		    index[alp][1]=b-1;//終わり
+		    		System.out.println(index[alp][1]);
+		    while(dic_line[b][0].charAt(0)>check){
+			alp++;
+			index[alp][0]=-1;
+			index[alp][1]=-1;
+			check++;
+		    }
+		
+		    alp++;
+		    check++;
+		    index[alp][1]=b;
+		}
+		    
+		b++;
 	    }
+
+	    */
 
 
 
