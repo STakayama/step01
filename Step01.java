@@ -258,10 +258,10 @@ public class Step01{
 		dic_line[a][1]=st.substring(0,st.indexOf(","));//
 		dic_line[a][2]=st.substring(st.indexOf(",")+1);//答え
 
-			System.out.println(row_line[a]);
-					System.out.println(dic_line[a][0]);
-				System.out.println(dic_line[a][1]);
-			System.out.println(dic_line[a][2]);
+		//			System.out.println(row_line[a]);
+		//			System.out.println(dic_line[a][0]);
+		//		System.out.println(dic_line[a][1]);
+		//	System.out.println(dic_line[a][2]);
 	}
 
 
@@ -379,7 +379,7 @@ public class Step01{
 		    char[] input_char=strtemp.toCharArray();
 		    quicksort(input_char,0,input_char.length-1);//入力文字の整列 最初に一回でもよさげ？
 		    String    after_input=String.valueOf(input_char);
-		    System.out.println("並び替え:"+after_input);
+		    //	    System.out.println("並び替え:"+after_input);
 
 
 
