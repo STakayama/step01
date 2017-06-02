@@ -174,7 +174,7 @@ public class Step01{
 
     public static String[] make_dic(String row[]){
 	try{
-	    String st;
+	    String st,st2;
 	    FileReader dic=new FileReader("dic.txt");
 	    BufferedReader dic_buf=new BufferedReader(dic);
 	    int i=0;
@@ -198,12 +198,12 @@ public class Step01{
 		}
 		quicksort(change,0,change.length-1);//文字を若い順に
 		
-		st=String.valueOf(change);
-		if(Character.isUpperCase(st.charAt(0))){
-		        st=st.toLowerCase();
+		st2=String.valueOf(change);
+		if(Character.isUpperCase(st2.charAt(0))){
+		        st2=st.toLowerCase();
 		    } 
 
-		row[i]=st+","+String.valueOf(point)+","+st;
+		row[i]=st2+","+String.valueOf(point)+","+st;
 		//		System.out.println(row[i]);
 		//		System.out.println(row[i].substring(0,row[i].indexOf(",")));
 		//	dic_line[i][0]=String.valueOf(change);//並び替え後の単語
@@ -258,10 +258,10 @@ public class Step01{
 		dic_line[a][1]=st.substring(0,st.indexOf(","));//
 		dic_line[a][2]=st.substring(st.indexOf(",")+1);//答え
 
-		//	System.out.println(dic_line[a][0]);
-				//	System.out.println(dic_line[a][0]);
-		//		System.out.println(dic_line[a][1]);
-		//	System.out.println(dic_line[a][2]);
+			System.out.println(row_line[a]);
+					System.out.println(dic_line[a][0]);
+				System.out.println(dic_line[a][1]);
+			System.out.println(dic_line[a][2]);
 	}
 
 
